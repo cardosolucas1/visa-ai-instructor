@@ -30,9 +30,24 @@ export async function POST(request: Request) {
     .limit(1)
     .maybeSingle();
 
-  if (error || !data) {
+  if (!error && data?.status && data.status !== "pending") {
+    return NextResponse.json({ ok: true, status: data.status });
+  }
+
+  const { data: application } = await supabase
+    .from("visa_applications")
+    .select("status")
+    .eq("id", applicationId)
+    .eq("user_id", userData.user.id)
+    .maybeSingle();
+
+  if (!application) {
     return NextResponse.json({ ok: false }, { status: 404 });
   }
 
-  return NextResponse.json({ ok: true, status: data.status });
+  if (["paid", "processing", "done", "error"].includes(application.status)) {
+    return NextResponse.json({ ok: true, status: "approved" });
+  }
+
+  return NextResponse.json({ ok: true, status: "pending" });
 }

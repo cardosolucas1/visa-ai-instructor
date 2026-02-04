@@ -31,16 +31,6 @@ const isUuid = (value?: string) =>
 
 export async function POST(request: Request) {
   const { ABACATEPAY_WEBHOOK_SECRET } = getServerEnv();
-  const url = new URL(request.url);
-  const webhookSecret = url.searchParams.get("webhookSecret");
-
-  if (!webhookSecret) {
-    return NextResponse.json({ ok: false }, { status: 400 });
-  }
-
-  if (webhookSecret !== ABACATEPAY_WEBHOOK_SECRET) {
-    return NextResponse.json({ ok: false }, { status: 401 });
-  }
 
   const signatureHeader = request.headers.get("x-webhook-signature");
   if (!signatureHeader) {
