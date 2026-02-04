@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 type ApiResponse = {
@@ -19,6 +19,7 @@ type StatusResponse = {
 export default function PayWithAbacatePage() {
   const params = useParams<{ id: string }>();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
   const [paymentUrl, setPaymentUrl] = useState<string | null>(null);
   const [pixCopy, setPixCopy] = useState<string | null>(null);
@@ -30,6 +31,8 @@ export default function PayWithAbacatePage() {
     email: "",
     taxId: "",
   });
+  const returnStatus = searchParams.get("status");
+  const shouldCreateCharge = returnStatus !== "success" && returnStatus !== "cancelled";
 
   const qrUrl = useMemo(() => {
     if (!paymentUrl) return null;
@@ -53,6 +56,12 @@ export default function PayWithAbacatePage() {
 
     const data = (await response.json()) as ApiResponse;
 
+    if (response.status === 409) {
+      setIsSubmitting(false);
+      router.push(`/app/a/${params.id}/status`);
+      return;
+    }
+
     if (!response.ok || !data.payment_url) {
       if (response.status === 422) {
         setNeedsCustomer(true);
@@ -69,11 +78,11 @@ export default function PayWithAbacatePage() {
   };
 
   useEffect(() => {
-    if (params?.id) {
+    if (params?.id && shouldCreateCharge) {
       void createCharge(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params?.id]);
+  }, [params?.id, shouldCreateCharge]);
 
   useEffect(() => {
     if (!params?.id) return;
@@ -122,6 +131,18 @@ export default function PayWithAbacatePage() {
           Use o QR Code ou o link para concluir o pagamento.
         </p>
       </div>
+
+      {returnStatus === "success" ? (
+        <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+          Pagamento recebido. Estamos confirmando a aprovação e atualizando esta página.
+        </div>
+      ) : null}
+
+      {returnStatus === "cancelled" ? (
+        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          Pagamento cancelado. Você pode tentar novamente.
+        </div>
+      ) : null}
 
       {paymentUrl ? (
         <div className="rounded-2xl border border-zinc-200 bg-white p-6">

@@ -26,6 +26,9 @@ const mapPaymentStatus = (status?: string) => {
   return "pending";
 };
 
+const isUuid = (value?: string) =>
+  Boolean(value && /^[0-9a-fA-F-]{36}$/.test(value));
+
 export async function POST(request: Request) {
   const { ABACATEPAY_WEBHOOK_SECRET } = getServerEnv();
   const url = new URL(request.url);
@@ -95,15 +98,25 @@ export async function POST(request: Request) {
         .update({ status: paymentStatus })
         .eq("provider", "abacatepay")
         .eq("provider_payment_id", providerPaymentId);
-    } else if (providerReference) {
+    }
+
+    if (providerReference) {
       await admin
         .from("payments")
         .update({ status: paymentStatus })
         .eq("provider", "abacatepay")
         .eq("provider_reference", providerReference);
+
+      if (isUuid(providerReference)) {
+        await admin
+          .from("payments")
+          .update({ status: paymentStatus })
+          .eq("provider", "abacatepay")
+          .eq("application_id", providerReference);
+      }
     }
 
-    if (providerReference && paymentStatus === "approved") {
+    if (providerReference && isUuid(providerReference) && paymentStatus === "approved") {
       await admin
         .from("visa_applications")
         .update({ status: "paid" })

@@ -58,8 +58,8 @@ export async function POST(request: Request) {
           price: ITEM_PRICE_CENTS,
         },
       ],
-      returnUrl: `${APP_BASE_URL}/app/a/${applicationId}/pay?status=cancelled`,
-      completionUrl: `${APP_BASE_URL}/app/a/${applicationId}/pay?status=success`,
+      returnUrl: `${APP_BASE_URL}/app/a/${applicationId}/pay/abacate?status=cancelled`,
+      completionUrl: `${APP_BASE_URL}/app/a/${applicationId}/pay/abacate?status=success`,
       ...(ABACATEPAY_CUSTOMER_ID
         ? { customerId: ABACATEPAY_CUSTOMER_ID }
         : {}),
@@ -75,9 +75,12 @@ export async function POST(request: Request) {
     application_id: applicationId,
     user_id: userData.user.id,
     provider: "abacatepay",
-    status: "awaiting_payment",
+    status: "pending",
     amount_cents: ITEM_PRICE_CENTS,
     currency: "BRL",
+    provider_payment_id: billing.id,
+    provider_reference: applicationId,
+    provider_checkout_url: billing.url,
     provider_payload: {
       billing_id: billing.id,
       payment_url: billing.url,

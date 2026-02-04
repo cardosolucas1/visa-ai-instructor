@@ -7,10 +7,14 @@ type PageProps = {
   params: Promise<{
     id: string;
   }>;
+  searchParams?: Promise<{
+    status?: string;
+  }>;
 };
 
-export default async function ApplicationPayPage({ params }: PageProps) {
+export default async function ApplicationPayPage({ params, searchParams }: PageProps) {
   const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
   const supabase = await createSupabaseServerClient();
   const { data: userData } = await supabase.auth.getUser();
 
@@ -31,6 +35,10 @@ export default async function ApplicationPayPage({ params }: PageProps) {
         Não foi possível carregar esta análise.
       </div>
     );
+  }
+
+  if (resolvedSearchParams?.status) {
+    redirect(`/app/a/${resolvedParams.id}/pay/abacate?status=${resolvedSearchParams.status}`);
   }
 
   if (application.status === "draft") {
