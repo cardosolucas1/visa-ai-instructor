@@ -27,7 +27,9 @@ export async function GET(request: Request) {
   const type = searchParams.get("type");
   const next = getSafeNextPath(searchParams.get("next"));
 
-  const supabase = await createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient({
+    allowWriteCookies: true,
+  });
 
   if (code) {
     const { error } = await supabase.auth.exchangeCodeForSession(code);

@@ -11,7 +11,9 @@ export default function LogoutForm({
 }: LogoutFormProps) {
   const logout = async () => {
     "use server";
-    const supabase = await createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient({
+      allowWriteCookies: true,
+    });
     await supabase.auth.signOut();
   };
 

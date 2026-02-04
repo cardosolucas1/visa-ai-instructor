@@ -31,6 +31,9 @@ export const getServerEnv = () => {
   const serverSchema = publicSchema.extend({
     SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
     APP_BASE_URL: z.string().url(),
+    ABACATEPAY_API_KEY: z.string().min(1),
+    ABACATEPAY_CUSTOMER_ID: z.string().min(1).optional(),
+    ABACATEPAY_WEBHOOK_SECRET: z.string().min(1),
   });
 
   const parsed = serverSchema.safeParse(process.env);

@@ -36,3 +36,15 @@ a {
 button {
   cursor: pointer;
 }
+
+input,
+textarea,
+select {
+  color: #111827;
+  background-color: #ffffff;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #6b7280;
+}

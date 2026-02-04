@@ -5,9 +5,16 @@ import { cookies } from "next/headers";
 
 import { getPublicEnv } from "@/lib/env";
 
-export const createSupabaseServerClient = async () => {
+type ServerClientOptions = {
+  allowWriteCookies?: boolean;
+};
+
+export const createSupabaseServerClient = async (
+  options: ServerClientOptions = {},
+) => {
   const env = getPublicEnv();
   const cookieStore = await cookies();
+  const { allowWriteCookies = false } = options;
 
   return createServerClient(
     env.NEXT_PUBLIC_SUPABASE_URL,
@@ -17,11 +24,19 @@ export const createSupabaseServerClient = async () => {
         getAll() {
           return cookieStore.getAll();
         },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => {
-            cookieStore.set(name, value, options);
-          });
-        },
+        ...(allowWriteCookies
+          ? {
+              setAll(cookiesToSet: Array<{
+                name: string;
+                value: string;
+                options?: Parameters<typeof cookieStore.set>[2];
+              }>) {
+                cookiesToSet.forEach(({ name, value, options }) => {
+                  cookieStore.set(name, value, options);
+                });
+              },
+            }
+          : {}),
       },
     },
   );
