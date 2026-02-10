@@ -1,0 +1,35 @@
+{
+  "appTitle": "DS-160 (modelo)",
+  "stepper": {
+    "next": "Proximo",
+    "back": "Voltar",
+    "review": "Revisar",
+    "submit": "Enviar",
+    "saving": "Salvando...",
+    "saveDraft": "Salvar rascunho",
+    "savedAt": "Salvo as {time}"
+  },
+  "draft": {
+    "title": "Recuperar rascunho",
+    "description": "Use o Application ID e a resposta de seguranca para recuperar o rascunho salvo no servidor.",
+    "securityAnswer": "Resposta de seguranca",
+    "load": "Carregar rascunho",
+    "loaded": "Rascunho carregado com sucesso."
+  },
+  "confirmation": {
+    "title": "Confirmacao enviada",
+    "subtitle": "Seu formulario foi enviado. Guarde este numero para referencia.",
+    "print": "Imprimir",
+    "copy": "Copiar numero",
+    "copied": "Copiado"
+  },
+  "form": {
+    "required": "Campo obrigatorio",
+    "noAccents": "Nao use acentos.",
+    "invalidDate": "Data invalida",
+    "invalidOption": "Opcao invalida",
+    "selectPlaceholder": "Selecione",
+    "firstError": "Corrija o primeiro erro para continuar.",
+    "uploadHint": "Tipos aceitos: JPG, PNG, PDF ate 5MB."
+  }
+}

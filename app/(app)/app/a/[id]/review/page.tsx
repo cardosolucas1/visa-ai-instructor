@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import AnswersSummary from "@/components/app/AnswersSummary";
 import {
   getApplicationAnswers,
   updateApplicationStatus,
 } from "@/lib/db/applications";
+import { loadFormSchema } from "@/lib/schema-loader";
 
 type PageProps = {
   params: Promise<{
@@ -21,7 +23,10 @@ export default async function ApplicationReviewPage({
 }: PageProps) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
-  const { data, error } = await getApplicationAnswers(resolvedParams.id);
+  const [schema, { data, error }] = await Promise.all([
+    loadFormSchema(),
+    getApplicationAnswers(resolvedParams.id),
+  ]);
 
   if (error) {
     return (
@@ -68,9 +73,9 @@ export default async function ApplicationReviewPage({
         <h2 className="text-base font-semibold text-zinc-900">
           Resumo das respostas
         </h2>
-        <pre className="mt-4 whitespace-pre-wrap rounded-lg bg-zinc-50 p-4 text-xs text-zinc-700">
-          {JSON.stringify(data ?? {}, null, 2)}
-        </pre>
+        <div className="mt-4">
+          <AnswersSummary schema={schema} data={data ?? {}} />
+        </div>
       </div>
 
       <form

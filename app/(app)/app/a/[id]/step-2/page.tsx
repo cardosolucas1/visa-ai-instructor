@@ -1,13 +1,11 @@
-import StepTwoForm from "@/components/app/step-two-form";
+import AppStepFormClient from "@/components/app/AppStepFormClient";
 import { getApplicationAnswers } from "@/lib/db/applications";
+import { getSchemaSubsetForAppStep } from "@/lib/ds160-app-steps";
+import { loadFormSchema } from "@/lib/schema-loader";
 
 type PageProps = {
-  params: Promise<{
-    id: string;
-  }>;
-  searchParams?: Promise<{
-    error?: string;
-  }>;
+  params: Promise<{ id: string }>;
+  searchParams?: Promise<{ error?: string }>;
 };
 
 export default async function ApplicationStepTwoPage({
@@ -16,7 +14,10 @@ export default async function ApplicationStepTwoPage({
 }: PageProps) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
-  const { data, error } = await getApplicationAnswers(resolvedParams.id);
+  const [schema, { data, error }] = await Promise.all([
+    loadFormSchema(),
+    getApplicationAnswers(resolvedParams.id),
+  ]);
 
   if (error) {
     return (
@@ -26,21 +27,25 @@ export default async function ApplicationStepTwoPage({
     );
   }
 
+  const schemaSubset = getSchemaSubsetForAppStep(schema, 2);
+
   return (
     <div className="rounded-2xl border border-zinc-200 bg-white p-6">
       <h1 className="text-xl font-semibold text-zinc-900">Passo 2</h1>
       <p className="mt-2 text-sm text-zinc-600">
-        Informe detalhes básicos da sua viagem.
+        Viagem planejada, acompanhantes e viagens anteriores aos EUA.
       </p>
       {resolvedSearchParams?.error === "save_failed" ? (
         <p className="mt-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-700">
           Não foi possível salvar agora. Tente novamente.
         </p>
       ) : null}
-      <StepTwoForm
-        initialValues={data ?? {}}
+      <AppStepFormClient
+        schemaSubset={schemaSubset}
         applicationId={resolvedParams.id}
+        initialValues={data ?? {}}
         nextPath={`/app/a/${resolvedParams.id}/step-3`}
+        prevPath={`/app/a/${resolvedParams.id}/step-1`}
       />
     </div>
   );

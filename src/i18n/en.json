@@ -1,0 +1,35 @@
+{
+  "appTitle": "DS-160 (sample)",
+  "stepper": {
+    "next": "Next",
+    "back": "Back",
+    "review": "Review",
+    "submit": "Submit",
+    "saving": "Saving...",
+    "saveDraft": "Save draft",
+    "savedAt": "Saved at {time}"
+  },
+  "draft": {
+    "title": "Resume draft",
+    "description": "Use your Application ID and security answer to recover the server draft.",
+    "securityAnswer": "Security answer",
+    "load": "Load draft",
+    "loaded": "Draft loaded successfully."
+  },
+  "confirmation": {
+    "title": "Confirmation sent",
+    "subtitle": "Your form was submitted. Keep this number for reference.",
+    "print": "Print",
+    "copy": "Copy number",
+    "copied": "Copied"
+  },
+  "form": {
+    "required": "Required field",
+    "noAccents": "Do not use accents.",
+    "invalidDate": "Invalid date",
+    "invalidOption": "Invalid option",
+    "selectPlaceholder": "Select",
+    "firstError": "Fix the first error to continue.",
+    "uploadHint": "Accepted types: JPG, PNG, PDF up to 5MB."
+  }
+}

@@ -1,0 +1,985 @@
+{
+  "title": {
+    "pt-BR": "DS-160 (modelo)",
+    "en": "DS-160 (sample)"
+  },
+  "steps": [
+    {
+      "id": "personal_1",
+      "title": {
+        "pt-BR": "Informacoes pessoais",
+        "en": "Personal information"
+      },
+      "fields": [
+        {
+          "id": "surname",
+          "type": "text",
+          "label": {
+            "pt-BR": "Sobrenome (Surnames)",
+            "en": "Surname"
+          },
+          "required": true,
+          "validations": {
+            "noAccents": true
+          },
+          "helpText": {
+            "pt-BR": "Nao use acentos.",
+            "en": "Do not use accents."
+          }
+        },
+        {
+          "id": "given_names",
+          "type": "text",
+          "label": {
+            "pt-BR": "Primeiro nome (Given Names)",
+            "en": "Given names"
+          },
+          "required": true,
+          "validations": {
+            "noAccents": true
+          },
+          "helpText": {
+            "pt-BR": "Nao use acentos.",
+            "en": "Do not use accents."
+          }
+        },
+        {
+          "id": "full_name_native",
+          "type": "text",
+          "label": {
+            "pt-BR": "Nome no alfabeto nativo",
+            "en": "Full name in native alphabet"
+          },
+          "required": false
+        },
+        {
+          "id": "other_names_used",
+          "type": "radio",
+          "label": {
+            "pt-BR": "Ja usou outro nome?",
+            "en": "Have you used other names?"
+          },
+          "required": true,
+          "options": [
+            { "value": "yes", "label": { "pt-BR": "Sim", "en": "Yes" } },
+            { "value": "no", "label": { "pt-BR": "Nao", "en": "No" } }
+          ]
+        },
+        {
+          "id": "other_names",
+          "type": "repeatable",
+          "label": {
+            "pt-BR": "Outros nomes",
+            "en": "Other names"
+          },
+          "conditions": [
+            { "fieldId": "other_names_used", "equals": "yes" }
+          ],
+          "fields": [
+            {
+              "id": "other_name",
+              "type": "text",
+              "label": {
+                "pt-BR": "Nome",
+                "en": "Name"
+              },
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "sex",
+          "type": "radio",
+          "label": {
+            "pt-BR": "Sexo",
+            "en": "Sex"
+          },
+          "required": true,
+          "options": [
+            { "value": "M", "label": { "pt-BR": "Masculino", "en": "Male" } },
+            { "value": "F", "label": { "pt-BR": "Feminino", "en": "Female" } }
+          ]
+        },
+        {
+          "id": "date_of_birth",
+          "type": "date",
+          "label": {
+            "pt-BR": "Data de nascimento",
+            "en": "Date of birth"
+          },
+          "required": true
+        },
+        {
+          "id": "city_of_birth",
+          "type": "text",
+          "label": {
+            "pt-BR": "Cidade de nascimento",
+            "en": "City of birth"
+          },
+          "required": true
+        },
+        {
+          "id": "country_of_birth",
+          "type": "text",
+          "label": {
+            "pt-BR": "Pais de nascimento",
+            "en": "Country of birth"
+          },
+          "required": true
+        },
+        {
+          "id": "marital_status",
+          "type": "select",
+          "label": {
+            "pt-BR": "Estado civil",
+            "en": "Marital status"
+          },
+          "required": true,
+          "options": [
+            { "value": "single", "label": { "pt-BR": "Solteiro(a)", "en": "Single" } },
+            { "value": "married", "label": { "pt-BR": "Casado(a)", "en": "Married" } },
+            { "value": "divorced", "label": { "pt-BR": "Divorciado(a)", "en": "Divorced" } },
+            { "value": "widowed", "label": { "pt-BR": "Viuvo(a)", "en": "Widowed" } }
+          ]
+        },
+        {
+          "id": "spouse_name",
+          "type": "text",
+          "label": {
+            "pt-BR": "Nome do conjuge",
+            "en": "Spouse name"
+          },
+          "required": false,
+          "conditions": [
+            { "fieldId": "marital_status", "equals": "married" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "personal_2",
+      "title": {
+        "pt-BR": "Informacoes pessoais 2",
+        "en": "Personal information 2"
+      },
+      "fields": [
+        {
+          "id": "nationality",
+          "type": "text",
+          "label": {
+            "pt-BR": "Nacionalidade",
+            "en": "Nationality"
+          },
+          "required": true
+        },
+        {
+          "id": "other_nationality",
+          "type": "radio",
+          "label": {
+            "pt-BR": "Possui outra nacionalidade?",
+            "en": "Do you hold another nationality?"
+          },
+          "required": true,
+          "options": [
+            { "value": "yes", "label": { "pt-BR": "Sim", "en": "Yes" } },
+            { "value": "no", "label": { "pt-BR": "Nao", "en": "No" } }
+          ]
+        },
+        {
+          "id": "other_nationality_country",
+          "type": "text",
+          "label": {
+            "pt-BR": "Outra nacionalidade",
+            "en": "Other nationality"
+          },
+          "required": false,
+          "conditions": [
+            { "fieldId": "other_nationality", "equals": "yes" }
+          ]
+        },
+        {
+          "id": "national_id",
+          "type": "text",
+          "label": {
+            "pt-BR": "Documento nacional",
+            "en": "National ID"
+          },
+          "required": false
+        },
+        {
+          "id": "taxpayer_id",
+          "type": "text",
+          "label": {
+            "pt-BR": "CPF",
+            "en": "Taxpayer ID"
+          },
+          "required": false
+        },
+        {
+          "id": "us_ssn",
+          "type": "text",
+          "label": {
+            "pt-BR": "Social Security Number (se tiver)",
+            "en": "U.S. Social Security Number (if any)"
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "travel_info",
+      "title": {
+        "pt-BR": "Informacoes de viagem",
+        "en": "Travel information"
+      },
+      "fields": [
+        {
+          "id": "purpose_of_trip",
+          "type": "select",
+          "label": {
+            "pt-BR": "Proposito da viagem",
+            "en": "Purpose of trip"
+          },
+          "required": true,
+          "options": [
+            { "value": "B1B2", "label": { "pt-BR": "B1/B2 - Turismo/Negocios", "en": "B1/B2 - Business/Tourism" } },
+            { "value": "STUDY", "label": { "pt-BR": "Estudo", "en": "Study" } },
+            { "value": "WORK", "label": { "pt-BR": "Trabalho", "en": "Work" } },
+            { "value": "OTHER", "label": { "pt-BR": "Outro", "en": "Other" } }
+          ]
+        },
+        {
+          "id": "have_travel_plans",
+          "type": "radio",
+          "label": {
+            "pt-BR": "Ja tem planos especificos?",
+            "en": "Do you have specific travel plans?"
+          },
+          "required": true,
+          "options": [
+            { "value": "yes", "label": { "pt-BR": "Sim", "en": "Yes" } },
+            { "value": "no", "label": { "pt-BR": "Nao", "en": "No" } }
+          ]
+        },
+        {
+          "id": "intended_arrival",
+          "type": "date",
+          "label": {
+            "pt-BR": "Data prevista de chegada",
+            "en": "Intended date of arrival"
+          },
+          "required": false,
+          "conditions": [
+            { "fieldId": "have_travel_plans", "equals": "yes" }
+          ]
+        },
+        {
+          "id": "intended_departure",
+          "type": "date",
+          "label": {
+            "pt-BR": "Data prevista de saida",
+            "en": "Intended date of departure"
+          },
+          "required": false,
+          "conditions": [
+            { "fieldId": "have_travel_plans", "equals": "yes" }
+          ]
+        },
+        {
+          "id": "flight_number",
+          "type": "text",
+          "label": {
+            "pt-BR": "Numero do voo (se souber)",
+            "en": "Flight number (if known)"
+          },
+          "required": false,
+          "conditions": [
+            { "fieldId": "have_travel_plans", "equals": "yes" }
+          ]
+        },
+        {
+          "id": "us_address",
+          "type": "text",
+          "label": {
+            "pt-BR": "Endereco nos EUA (se tiver)",
+            "en": "U.S. address (if known)"
+          },
+          "required": false
+        },
+        {
+          "id": "trip_payer",
+          "type": "select",
+          "label": {
+            "pt-BR": "Quem vai pagar a viagem?",
+            "en": "Who will pay for the trip?"
+          },
+          "required": true,
+          "options": [
+            { "value": "self", "label": { "pt-BR": "Eu mesmo", "en": "Self" } },
+            { "value": "employer", "label": { "pt-BR": "Empregador", "en": "Employer" } },
+            { "value": "other", "label": { "pt-BR": "Outro", "en": "Other person" } }
+          ]
+        },
+        {
+          "id": "payer_employer_name",
+          "type": "text",
+          "label": {
+            "pt-BR": "Nome do empregador",
+            "en": "Employer name"
+          },
+          "required": false,
+          "conditions": [
+            { "fieldId": "trip_payer", "equals": "employer" }
+          ]
+        },
+        {
+          "id": "payer_employer_phone",
+          "type": "text",
+          "label": {
+            "pt-BR": "Telefone do empregador",
+            "en": "Employer phone"
+          },
+          "required": false,
+          "conditions": [
+            { "fieldId": "trip_payer", "equals": "employer" }
+          ]
+        },
+        {
+          "id": "payer_other_name",
+          "type": "text",
+          "label": {
+            "pt-BR": "Nome do terceiro",
+            "en": "Third party name"
+          },
+          "required": false,
+          "conditions": [
+            { "fieldId": "trip_payer", "equals": "other" }
+          ]
+        },
+        {
+          "id": "payer_other_relationship",
+          "type": "text",
+          "label": {
+            "pt-BR": "Relacao com voce",
+            "en": "Relationship to you"
+          },
+          "required": false,
+          "conditions": [
+            { "fieldId": "trip_payer", "equals": "other" }
+          ]
+        },
+        {
+          "id": "payer_other_phone",
+          "type": "text",
+          "label": {
+            "pt-BR": "Telefone do terceiro",
+            "en": "Third party phone"
+          },
+          "required": false,
+          "conditions": [
+            { "fieldId": "trip_payer", "equals": "other" }
+          ]
+        },
+        {
+          "id": "payer_other_address",
+          "type": "text",
+          "label": {
+            "pt-BR": "Endereco do terceiro",
+            "en": "Third party address"
+          },
+          "required": false,
+          "conditions": [
+            { "fieldId": "trip_payer", "equals": "other" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "travel_companions",
+      "title": {
+        "pt-BR": "Acompanhantes de viagem",
+        "en": "Travel companions"
+      },
+      "fields": [
+        {
+          "id": "has_companions",
+          "type": "radio",
+          "label": {
+            "pt-BR": "Viajara com outras pessoas?",
+            "en": "Will you travel with others?"
+          },
+          "required": true,
+          "options": [
+            { "value": "yes", "label": { "pt-BR": "Sim", "en": "Yes" } },
+            { "value": "no", "label": { "pt-BR": "Nao", "en": "No" } }
+          ]
+        },
+        {
+          "id": "companions",
+          "type": "repeatable",
+          "label": {
+            "pt-BR": "Acompanhantes",
+            "en": "Companions"
+          },
+          "conditions": [
+            { "fieldId": "has_companions", "equals": "yes" }
+          ],
+          "fields": [
+            {
+              "id": "companion_name",
+              "type": "text",
+              "label": {
+                "pt-BR": "Nome",
+                "en": "Name"
+              },
+              "required": true
+            },
+            {
+              "id": "companion_relation",
+              "type": "select",
+              "label": {
+                "pt-BR": "Relacao",
+                "en": "Relationship"
+              },
+              "required": true,
+              "options": [
+                { "value": "parent", "label": { "pt-BR": "Pai/Mae", "en": "Parent" } },
+                { "value": "spouse", "label": { "pt-BR": "Conjuge", "en": "Spouse" } },
+                { "value": "child", "label": { "pt-BR": "Filho(a)", "en": "Child" } },
+                { "value": "other", "label": { "pt-BR": "Outro", "en": "Other" } }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "previous_travel",
+      "title": {
+        "pt-BR": "Viagens anteriores aos EUA",
+        "en": "Previous U.S. travel"
+      },
+      "fields": [
+        {
+          "id": "has_been_to_us",
+          "type": "radio",
+          "label": {
+            "pt-BR": "Ja esteve nos EUA?",
+            "en": "Have you been to the U.S.?"
+          },
+          "required": true,
+          "options": [
+            { "value": "yes", "label": { "pt-BR": "Sim", "en": "Yes" } },
+            { "value": "no", "label": { "pt-BR": "Nao", "en": "No" } }
+          ]
+        },
+        {
+          "id": "last_us_visit",
+          "type": "date",
+          "label": {
+            "pt-BR": "Data da ultima visita",
+            "en": "Date of last visit"
+          },
+          "required": false,
+          "conditions": [
+            { "fieldId": "has_been_to_us", "equals": "yes" }
+          ]
+        },
+        {
+          "id": "length_of_stay",
+          "type": "text",
+          "label": {
+            "pt-BR": "Tempo de permanencia",
+            "en": "Length of stay"
+          },
+          "required": false,
+          "conditions": [
+            { "fieldId": "has_been_to_us", "equals": "yes" }
+          ]
+        },
+        {
+          "id": "previous_visa_denied",
+          "type": "radio",
+          "label": {
+            "pt-BR": "Ja teve visto negado?",
+            "en": "Have you ever been denied a U.S. visa?"
+          },
+          "required": true,
+          "options": [
+            { "value": "yes", "label": { "pt-BR": "Sim", "en": "Yes" } },
+            { "value": "no", "label": { "pt-BR": "Nao", "en": "No" } }
+          ]
+        },
+        {
+          "id": "previous_visa_denied_details",
+          "type": "text",
+          "label": {
+            "pt-BR": "Explique (se sim)",
+            "en": "Explain (if yes)"
+          },
+          "required": false,
+          "conditions": [
+            { "fieldId": "previous_visa_denied", "equals": "yes" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "contact_info",
+      "title": {
+        "pt-BR": "Endereco e contato",
+        "en": "Address and phone"
+      },
+      "fields": [
+        {
+          "id": "address",
+          "type": "text",
+          "label": {
+            "pt-BR": "Endereco",
+            "en": "Address"
+          },
+          "required": true
+        },
+        {
+          "id": "city",
+          "type": "text",
+          "label": {
+            "pt-BR": "Cidade",
+            "en": "City"
+          },
+          "required": true
+        },
+        {
+          "id": "state_province",
+          "type": "text",
+          "label": {
+            "pt-BR": "Estado/Provincia",
+            "en": "State/Province"
+          },
+          "required": true
+        },
+        {
+          "id": "postal_code",
+          "type": "text",
+          "label": {
+            "pt-BR": "CEP",
+            "en": "Postal code"
+          },
+          "required": true
+        },
+        {
+          "id": "country",
+          "type": "text",
+          "label": {
+            "pt-BR": "Pais",
+            "en": "Country"
+          },
+          "required": true
+        },
+        {
+          "id": "phone",
+          "type": "text",
+          "label": {
+            "pt-BR": "Telefone",
+            "en": "Phone"
+          },
+          "required": true
+        },
+        {
+          "id": "email",
+          "type": "text",
+          "label": {
+            "pt-BR": "E-mail",
+            "en": "Email"
+          },
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "passport_docs",
+      "title": {
+        "pt-BR": "Passaporte e documentos",
+        "en": "Passport and documents"
+      },
+      "fields": [
+        {
+          "id": "passport_number",
+          "type": "text",
+          "label": {
+            "pt-BR": "Numero do passaporte",
+            "en": "Passport number"
+          },
+          "required": true
+        },
+        {
+          "id": "passport_book_number",
+          "type": "text",
+          "label": {
+            "pt-BR": "Numero do livro (se tiver)",
+            "en": "Passport book number (if any)"
+          },
+          "required": false
+        },
+        {
+          "id": "passport_country",
+          "type": "text",
+          "label": {
+            "pt-BR": "Pais emissor",
+            "en": "Issuing country"
+          },
+          "required": true
+        },
+        {
+          "id": "passport_issue_date",
+          "type": "date",
+          "label": {
+            "pt-BR": "Data de emissao",
+            "en": "Issue date"
+          },
+          "required": true
+        },
+        {
+          "id": "passport_expiry",
+          "type": "date",
+          "label": {
+            "pt-BR": "Validade do passaporte",
+            "en": "Passport expiration date"
+          },
+          "required": true
+        },
+        {
+          "id": "passport_lost",
+          "type": "radio",
+          "label": {
+            "pt-BR": "Ja perdeu passaporte?",
+            "en": "Have you ever lost a passport?"
+          },
+          "required": true,
+          "options": [
+            { "value": "yes", "label": { "pt-BR": "Sim", "en": "Yes" } },
+            { "value": "no", "label": { "pt-BR": "Nao", "en": "No" } }
+          ]
+        },
+        {
+          "id": "passport_lost_details",
+          "type": "text",
+          "label": {
+            "pt-BR": "Explique (se sim)",
+            "en": "Explain (if yes)"
+          },
+          "required": false,
+          "conditions": [
+            { "fieldId": "passport_lost", "equals": "yes" }
+          ]
+        },
+        {
+          "id": "passport_scan",
+          "type": "file",
+          "label": {
+            "pt-BR": "Upload do passaporte (foto/pdf)",
+            "en": "Upload passport (photo/pdf)"
+          },
+          "required": false,
+          "validations": {
+            "maxFileSizeMb": 5,
+            "allowedTypes": ["image/jpeg", "image/png", "application/pdf"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "us_contact",
+      "title": {
+        "pt-BR": "Contato nos EUA",
+        "en": "U.S. contact"
+      },
+      "fields": [
+        {
+          "id": "us_contact_name",
+          "type": "text",
+          "label": {
+            "pt-BR": "Nome do contato",
+            "en": "Contact name"
+          },
+          "required": false
+        },
+        {
+          "id": "us_contact_relationship",
+          "type": "text",
+          "label": {
+            "pt-BR": "Relacao",
+            "en": "Relationship"
+          },
+          "required": false
+        },
+        {
+          "id": "us_contact_address",
+          "type": "text",
+          "label": {
+            "pt-BR": "Endereco do contato",
+            "en": "Contact address"
+          },
+          "required": false
+        },
+        {
+          "id": "us_contact_phone",
+          "type": "text",
+          "label": {
+            "pt-BR": "Telefone do contato",
+            "en": "Contact phone"
+          },
+          "required": false
+        },
+        {
+          "id": "us_contact_email",
+          "type": "text",
+          "label": {
+            "pt-BR": "E-mail do contato",
+            "en": "Contact email"
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "work_education",
+      "title": {
+        "pt-BR": "Trabalho e educacao",
+        "en": "Work and education"
+      },
+      "fields": [
+        {
+          "id": "primary_occupation",
+          "type": "select",
+          "label": {
+            "pt-BR": "Ocupacao principal",
+            "en": "Primary occupation"
+          },
+          "required": true,
+          "options": [
+            { "value": "employed", "label": { "pt-BR": "Empregado", "en": "Employed" } },
+            { "value": "self", "label": { "pt-BR": "Autonomo", "en": "Self-employed" } },
+            { "value": "student", "label": { "pt-BR": "Estudante", "en": "Student" } },
+            { "value": "unemployed", "label": { "pt-BR": "Desempregado", "en": "Unemployed" } }
+          ]
+        },
+        {
+          "id": "employer_name",
+          "type": "text",
+          "label": {
+            "pt-BR": "Empregador/Empresa",
+            "en": "Employer"
+          },
+          "required": false
+        },
+        {
+          "id": "employer_address",
+          "type": "text",
+          "label": {
+            "pt-BR": "Endereco do empregador",
+            "en": "Employer address"
+          },
+          "required": false
+        },
+        {
+          "id": "employer_phone",
+          "type": "text",
+          "label": {
+            "pt-BR": "Telefone do empregador",
+            "en": "Employer phone"
+          },
+          "required": false
+        },
+        {
+          "id": "job_start_date",
+          "type": "date",
+          "label": {
+            "pt-BR": "Data de inicio",
+            "en": "Start date"
+          },
+          "required": false
+        },
+        {
+          "id": "monthly_income",
+          "type": "text",
+          "label": {
+            "pt-BR": "Renda mensal",
+            "en": "Monthly income"
+          },
+          "required": false
+        },
+        {
+          "id": "previous_jobs",
+          "type": "repeatable",
+          "label": {
+            "pt-BR": "Trabalhos anteriores",
+            "en": "Previous jobs"
+          },
+          "fields": [
+            {
+              "id": "company",
+              "type": "text",
+              "label": {
+                "pt-BR": "Empresa",
+                "en": "Company"
+              },
+              "required": true
+            },
+            {
+              "id": "role",
+              "type": "text",
+              "label": {
+                "pt-BR": "Cargo",
+                "en": "Role"
+              },
+              "required": true
+            },
+            {
+              "id": "start_date",
+              "type": "date",
+              "label": {
+                "pt-BR": "Inicio",
+                "en": "Start"
+              },
+              "required": true
+            },
+            {
+              "id": "end_date",
+              "type": "date",
+              "label": {
+                "pt-BR": "Fim",
+                "en": "End"
+              },
+              "required": true
+            }
+          ]
+        },
+        {
+          "id": "highest_education",
+          "type": "select",
+          "label": {
+            "pt-BR": "Nivel de escolaridade",
+            "en": "Highest education"
+          },
+          "required": true,
+          "options": [
+            { "value": "highschool", "label": { "pt-BR": "Ensino medio", "en": "High school" } },
+            { "value": "bachelor", "label": { "pt-BR": "Graduacao", "en": "Bachelor" } },
+            { "value": "master", "label": { "pt-BR": "Mestrado", "en": "Master" } },
+            { "value": "doctorate", "label": { "pt-BR": "Doutorado", "en": "Doctorate" } }
+          ]
+        },
+        {
+          "id": "school_name",
+          "type": "text",
+          "label": {
+            "pt-BR": "Nome da escola",
+            "en": "School name"
+          },
+          "required": false
+        },
+        {
+          "id": "school_city",
+          "type": "text",
+          "label": {
+            "pt-BR": "Cidade da escola",
+            "en": "School city"
+          },
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "security_background",
+      "title": {
+        "pt-BR": "Seguranca e antecedentes",
+        "en": "Security and background"
+      },
+      "fields": [
+        {
+          "id": "has_criminal_record",
+          "type": "radio",
+          "label": {
+            "pt-BR": "Ja foi condenado por algum crime?",
+            "en": "Have you ever been convicted of a crime?"
+          },
+          "required": true,
+          "options": [
+            { "value": "yes", "label": { "pt-BR": "Sim", "en": "Yes" } },
+            { "value": "no", "label": { "pt-BR": "Nao", "en": "No" } }
+          ]
+        },
+        {
+          "id": "criminal_details",
+          "type": "text",
+          "label": {
+            "pt-BR": "Explique (se sim)",
+            "en": "Explain (if yes)"
+          },
+          "required": false,
+          "conditions": [
+            { "fieldId": "has_criminal_record", "equals": "yes" }
+          ]
+        },
+        {
+          "id": "immigration_violation",
+          "type": "radio",
+          "label": {
+            "pt-BR": "Ja violou regras de imigracao?",
+            "en": "Have you ever violated immigration rules?"
+          },
+          "required": true,
+          "options": [
+            { "value": "yes", "label": { "pt-BR": "Sim", "en": "Yes" } },
+            { "value": "no", "label": { "pt-BR": "Nao", "en": "No" } }
+          ]
+        },
+        {
+          "id": "immigration_violation_details",
+          "type": "text",
+          "label": {
+            "pt-BR": "Explique (se sim)",
+            "en": "Explain (if yes)"
+          },
+          "required": false,
+          "conditions": [
+            { "fieldId": "immigration_violation", "equals": "yes" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "security_question",
+      "title": {
+        "pt-BR": "Seguranca da aplicacao",
+        "en": "Application security"
+      },
+      "fields": [
+        {
+          "id": "security_question",
+          "type": "select",
+          "label": {
+            "pt-BR": "Pergunta de seguranca",
+            "en": "Security question"
+          },
+          "required": true,
+          "options": [
+            { "value": "pet", "label": { "pt-BR": "Nome do seu primeiro pet", "en": "Name of your first pet" } },
+            { "value": "city", "label": { "pt-BR": "Cidade onde nasceu", "en": "City where you were born" } },
+            { "value": "school", "label": { "pt-BR": "Primeira escola", "en": "First school" } }
+          ]
+        },
+        {
+          "id": "security_answer",
+          "type": "text",
+          "label": {
+            "pt-BR": "Resposta",
+            "en": "Answer"
+          },
+          "required": true
+        }
+      ]
+    }
+  ]
+}

@@ -14,9 +14,14 @@ export default async function MarketingLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const supabase = await createSupabaseServerClient();
-  const { data } = await supabase.auth.getUser();
-  const isAuthenticated = Boolean(data.user);
+  let isAuthenticated = false;
+  try {
+    const supabase = await createSupabaseServerClient();
+    const { data } = await supabase.auth.getUser();
+    isAuthenticated = Boolean(data.user);
+  } catch {
+    // Supabase URL inacessível ou env ausente (ex.: dev sem .env) — trata como não autenticado
+  }
 
   return (
     <div className="flex min-h-screen flex-col">
