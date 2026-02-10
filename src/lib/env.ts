@@ -33,7 +33,9 @@ export const getServerEnv = () => {
     APP_BASE_URL: z.string().url(),
     ABACATEPAY_API_KEY: z.string().min(1),
     ABACATEPAY_CUSTOMER_ID: z.string().min(1).optional(),
-    ABACATEPAY_WEBHOOK_SECRET: z.string().min(1),
+    ABACATEPAY_WEBHOOK_SIGNATURE_SECRET: z.string().min(1),
+    /** Valor da compra em centavos (ex.: 4990 = R$ 49,90) */
+    PURCHASE_AMOUNT_CENTS: z.coerce.number().int().positive(),
   });
 
   const parsed = serverSchema.safeParse(process.env);

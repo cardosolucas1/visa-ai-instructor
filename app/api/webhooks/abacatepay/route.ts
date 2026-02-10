@@ -30,7 +30,7 @@ const isUuid = (value?: string) =>
   Boolean(value && /^[0-9a-fA-F-]{36}$/.test(value));
 
 export async function POST(request: Request) {
-  const { ABACATEPAY_WEBHOOK_SECRET } = getServerEnv();
+  const { ABACATEPAY_WEBHOOK_SIGNATURE_SECRET } = getServerEnv();
 
   const signatureHeader = request.headers.get("x-webhook-signature");
   if (!signatureHeader) {
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
   const rawBody = await request.text();
   const signatureValid = validateWebhookSignature(
     rawBody,
-    ABACATEPAY_WEBHOOK_SECRET,
+    ABACATEPAY_WEBHOOK_SIGNATURE_SECRET,
     signatureHeader,
   );
 

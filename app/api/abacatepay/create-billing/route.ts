@@ -10,7 +10,6 @@ type BillingRequestBody = {
 };
 
 const ITEM_TITLE = "Revisão B1/B2";
-const ITEM_PRICE_CENTS = 4990;
 const PAYMENT_METHODS = ["PIX"] as const;
 
 export async function POST(request: Request) {
@@ -21,7 +20,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false }, { status: 400 });
   }
 
-  const { APP_BASE_URL, ABACATEPAY_CUSTOMER_ID } = getServerEnv();
+  const { APP_BASE_URL, ABACATEPAY_CUSTOMER_ID, PURCHASE_AMOUNT_CENTS } =
+    getServerEnv();
 
   const supabase = await createSupabaseServerClient({
     allowWriteCookies: true,
@@ -55,7 +55,7 @@ export async function POST(request: Request) {
           name: ITEM_TITLE,
           description: "Revisão de consistência e completude B1/B2",
           quantity: 1,
-          price: ITEM_PRICE_CENTS,
+          price: PURCHASE_AMOUNT_CENTS,
         },
       ],
       returnUrl: `${APP_BASE_URL}/app/a/${applicationId}/pay/abacate?status=cancelled`,
@@ -76,7 +76,7 @@ export async function POST(request: Request) {
     user_id: userData.user.id,
     provider: "abacatepay",
     status: "pending",
-    amount_cents: ITEM_PRICE_CENTS,
+    amount_cents: PURCHASE_AMOUNT_CENTS,
     currency: "BRL",
     provider_payment_id: billing.id,
     provider_reference: applicationId,

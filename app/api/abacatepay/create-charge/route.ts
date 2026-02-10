@@ -11,7 +11,6 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { rateLimit } from "@/lib/security/rateLimit";
 
 const ITEM_TITLE = "Revisão B1/B2 (Relatório)";
-const ITEM_PRICE_CENTS = 4990;
 const CURRENCY = "BRL";
 
 type CreateChargeBody = {
@@ -25,7 +24,7 @@ type CreateChargeBody = {
 };
 
 export async function POST(request: Request) {
-  const { APP_BASE_URL } = getServerEnv();
+  const { APP_BASE_URL, PURCHASE_AMOUNT_CENTS } = getServerEnv();
   const payload = (await request.json()) as CreateChargeBody;
   const applicationId = payload.applicationId;
 
@@ -110,7 +109,7 @@ export async function POST(request: Request) {
         name: ITEM_TITLE,
         description: "Revisão de consistência e completude B1/B2",
         quantity: 1,
-        price: ITEM_PRICE_CENTS,
+        price: PURCHASE_AMOUNT_CENTS,
       },
     ],
     returnUrl: `${APP_BASE_URL}/app/a/${applicationId}/pay/abacate?status=cancelled`,
@@ -125,7 +124,7 @@ export async function POST(request: Request) {
     providerPaymentId: billing.id,
     providerReference: applicationId,
     providerCheckoutUrl: billing.url,
-    amountCents: ITEM_PRICE_CENTS,
+    amountCents: PURCHASE_AMOUNT_CENTS,
     currency: CURRENCY,
   });
 
