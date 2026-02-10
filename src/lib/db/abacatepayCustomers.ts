@@ -40,3 +40,21 @@ export const upsertAbacatepayCustomerId = async (input: {
 
   return { error };
 };
+
+/** Remove o customer armazenado do usuário atual (ex.: quando o AbacatePay retorna "Customer not found"). */
+export const clearStoredAbacatepayCustomerId = async () => {
+  const supabase = await createSupabaseServerClient();
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+
+  if (userError || !userData.user) {
+    return { error: userError ?? new Error("Usuário inválido.") };
+  }
+
+  const admin = createSupabaseAdminClient();
+  const { error } = await admin
+    .from("abacatepay_customers")
+    .delete()
+    .eq("user_id", userData.user.id);
+
+  return { error };
+};

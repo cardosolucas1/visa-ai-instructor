@@ -6,6 +6,7 @@ import { getPendingPaymentForApplication, createPayment } from "@/lib/db/payment
 import {
   getAbacatepayCustomerId,
   upsertAbacatepayCustomerId,
+  clearStoredAbacatepayCustomerId,
 } from "@/lib/db/abacatepayCustomers";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { rateLimit } from "@/lib/security/rateLimit";
@@ -100,22 +101,45 @@ export async function POST(request: Request) {
     );
   }
 
-  const billing = await createBilling({
-    frequency: "ONE_TIME",
-    methods: ["PIX", "CARD"],
-    products: [
-      {
-        externalId: applicationId,
-        name: ITEM_TITLE,
-        description: "Revisão de consistência e completude B1/B2",
-        quantity: 1,
-        price: PURCHASE_AMOUNT_CENTS,
-      },
-    ],
-    returnUrl: `${APP_BASE_URL}/app/a/${applicationId}/pay/abacate?status=cancelled`,
-    completionUrl: `${APP_BASE_URL}/app/a/${applicationId}/pay/abacate?status=success`,
-    customerId: customerId ?? getServerEnv().ABACATEPAY_CUSTOMER_ID,
-  });
+  let billing;
+  try {
+    billing = await createBilling({
+      frequency: "ONE_TIME",
+      methods: ["PIX", "CARD"],
+      products: [
+        {
+          externalId: applicationId,
+          name: ITEM_TITLE,
+          description: "Revisão de consistência e completude B1/B2",
+          quantity: 1,
+          price: PURCHASE_AMOUNT_CENTS,
+        },
+      ],
+      returnUrl: `${APP_BASE_URL}/app/a/${applicationId}/pay/abacate?status=cancelled`,
+      completionUrl: `${APP_BASE_URL}/app/a/${applicationId}/pay/abacate?status=success`,
+      customerId: customerId ?? getServerEnv().ABACATEPAY_CUSTOMER_ID,
+    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    const isCustomerNotFound =
+      /customer not found|Customer not found/i.test(message);
+
+    if (isCustomerNotFound) {
+      await clearStoredAbacatepayCustomerId();
+      return NextResponse.json(
+        {
+          ok: false,
+          message:
+            "Cliente não encontrado. Preencha seus dados abaixo para criar o pagamento.",
+        },
+        { status: 422 },
+      );
+    }
+    return NextResponse.json(
+      { ok: false, message: message || "Erro ao criar cobrança." },
+      { status: 400 },
+    );
+  }
 
   const { error: paymentError } = await createPayment({
     applicationId,
@@ -129,7 +153,10 @@ export async function POST(request: Request) {
   });
 
   if (paymentError) {
-    return NextResponse.json({ ok: false, message: "Erro ao salvar pagamento." }, { status: 500 });
+    return NextResponse.json(
+      { ok: false, message: "Erro ao salvar pagamento." },
+      { status: 500 },
+    );
   }
 
   return NextResponse.json({ ok: true, payment_url: billing.url });
